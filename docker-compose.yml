@@ -1,0 +1,44 @@
+services:
+  postgres:
+    image: mdillon/postgis:9.6
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: engineTest888
+      POSTGRES_DB: portfolio
+    ports:
+      - "5555:5432"
+    volumes:
+      - ./backend/init-db:/docker-entrypoint-initdb.d
+      - pg-data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      PORT: "3000"
+      NODE_ENV: production
+      DB_USER: postgres
+      DB_PASSWORD: engineTest888
+      DB_HOST: postgres
+      DB_PORT: "5432"
+      DB_NAME: portfolio
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+
+volumes:
+  pg-data:
