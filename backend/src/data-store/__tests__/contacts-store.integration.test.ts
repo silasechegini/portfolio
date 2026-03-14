@@ -20,7 +20,7 @@
  * What this suite does
  * --------------------
  * 1. beforeAll  – creates a dedicated `portfolio_integration_test` database,
- *                 applies the real schema from init-db/01-setup.sql, and seeds
+ *                 applies the real schema from database/01-setup.sql, and seeds
  *                 two dummy contacts via ContactsStore.saveContact().
  * 2. Tests      – exercise getAllContacts(), getContactById(), and saveContact()
  *                 against the live database with no mocking whatsoever.
@@ -118,7 +118,7 @@ describe("ContactsStore – Integration (real PostgreSQL)", () => {
     const schemaPool = new Pool({ ...ADMIN_CONFIG, database: TEST_DB });
     try {
       const setupSql = fs.readFileSync(
-        path.resolve(__dirname, "../../../init-db/contacts.sql"),
+        path.resolve(__dirname, "../../../database/contacts.sql"),
         "utf-8",
       );
       // pg supports multiple DDL statements in a single query() call.

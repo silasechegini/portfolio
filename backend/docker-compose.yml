@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: engineTest888
       POSTGRES_DB: portfolio
     volumes:
-      - ./init-db/:/docker-entrypoint-initdb.d/
+      - ./database/:/docker-entrypoint-initdb.d/
       - pg-data:/var/lib/postgresql/data
 volumes:
   pg-data:
