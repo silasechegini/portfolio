@@ -2,3 +2,11 @@ node_modules
 dist
 .git
 .env
+.env.*
+coverage
+**/__tests__
+*.test.ts
+*.spec.ts
+docker-compose*.yml
+run-integration-tests.ps1
+README.md

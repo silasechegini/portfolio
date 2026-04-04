@@ -11,7 +11,30 @@ import { contactsStore } from "./data-store/contacts-store-factory";
 export function createApp() {
   const app = express();
   const healthRouter = createHealthRouter(contactsStore);
-  app.use(cors({ origin: "*" }));
+
+  const allowedOrigins = (process.env.CORS_ORIGIN || "*")
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+
+  const allowAllOrigins = allowedOrigins.includes("*");
+  app.use(
+    cors({
+      origin: (origin, callback) => {
+        // Allow server-to-server / health-check requests without browser origin.
+        if (!origin) {
+          return callback(null, true);
+        }
+
+        if (allowAllOrigins || allowedOrigins.includes(origin)) {
+          return callback(null, true);
+        }
+
+        return callback(new Error("Origin not allowed by CORS"));
+      },
+    }),
+  );
+
   app.use(loggerMiddleware);
   app.use(express.json());
 

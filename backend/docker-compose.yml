@@ -11,5 +11,23 @@ services:
     volumes:
       - ./database/:/docker-entrypoint-initdb.d/
       - pg-data:/var/lib/postgresql/data
+  
+  backend:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      PORT: "3000"
+      NODE_ENV: production
+      DB_USER: postgres
+      DB_PASSWORD: engineTest888
+      DB_HOST: postgres
+      DB_PORT: "5432"
+      DB_NAME: portfolio
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
 volumes:
   pg-data:

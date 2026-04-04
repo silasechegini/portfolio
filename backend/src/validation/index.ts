@@ -33,6 +33,7 @@ class ContactsValidators {
         .string()
         .regex(/^\d+$/, "DB_PORT must be a number")
         .default(process.env.DB_PORT || "5555"),
+      CORS_ORIGIN: z.string().optional().default(process.env.CORS_ORIGIN || "*"),
     });
     const env = envSchema.parse(process.env);
     return env;

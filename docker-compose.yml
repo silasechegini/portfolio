@@ -9,7 +9,7 @@ services:
     ports:
       - "5555:5432"
     volumes:
-      - ./backend/init-db:/docker-entrypoint-initdb.d
+      - ./backend/database/:/docker-entrypoint-initdb.d
       - pg-data:/var/lib/postgresql/data
 
   backend:
