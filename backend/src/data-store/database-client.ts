@@ -14,6 +14,7 @@ function getPool(): Pool {
       max: 5, // max number of clients in the pool
       idleTimeoutMillis: 30000, // close idle clients after 30 seconds
       connectionTimeoutMillis: 2000, // return an error after 2 seconds if connection could not be established
+      ssl: { rejectUnauthorized: false }, // Required for Render PostgreSQL
     });
 
     // Error handling for pool
